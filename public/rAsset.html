@@ -39,6 +39,11 @@
                             </select>
                         </div>
 
+                        <div class="form-group">
+                            <label for="ownerTIN">Asset Code</label>
+                            <input type="text" class="form-control" id="code" name="code" required>
+                        </div>
+
                         <button type="button" class="btn btn-success" onclick="registerAsset()">Register</button>
                     </form>
                 </div>
@@ -69,10 +74,11 @@
     <script>
         function registerAsset() {
   const formData = {
-    assetName: $('#assetName').val(),
+    name: $('#assetName').val(),
     estimatedCost: $('#estimatedCost').val(),
     ownerTIN: $('#ownerTIN').val(),
-    assetType: $('#assetType').val()
+    type: $('#assetType').val(),
+    assetCode: $('#code').val()
   };
 
   $.ajax({
@@ -85,7 +91,7 @@
       // You can add further actions here, like displaying a success message or updating the UI
     },
     error: function(error) {
-      console.error('Error registering asset:', error);
+      alert('Error registering asset:', error.assetCode);
       // Handle errors, e.g., display an error message to the user
     }
   });

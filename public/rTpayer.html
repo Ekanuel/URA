@@ -89,22 +89,23 @@
     <script>
         function registerTaxpayer() {
     const name= $('#name').val();
-    const dob= $('#dob').val();
+    const dateOfBirth= $('#dob').val();
     const occupation= $('#occupation').val();
     const gender= $('#gender').val();
     const phone= $('#phone').val();
     const email= $('#email').val();
-    const income= $('#income').val()
+    const expectedAnnualIncome= $('#income').val()
     const tin = $('#tin').val();
 
   const formData = {
     name,
-    dob,
+    dateOfBirth,
     occupation,
     gender,
     phone,
     email,
-    income
+    expectedAnnualIncome,
+    tin
   };
 
   $.ajax({
@@ -116,8 +117,9 @@
       alert(`Taxpayer registered successfully! TIN: ${response.tin}`);
       // You can add further actions here, like displaying a success message or updating the UI
     },
+    
     error: function(error) {
-      console.error('Error registering taxpayer:', error);
+      alert('Error registering taxpayer make sure your not registering a second time.');
       // Handle errors, e.g., display an error message to the user
     }
   });

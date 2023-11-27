@@ -8,11 +8,18 @@ const taxPayerRegistration = async (req, res) => {
       res.status(201).json(newTaxpayer);
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: 'Internal Server Error' });
+      res.status(500).json({ tin: 'Internal Server Error: '+error.message });
     }
   };
 
-const loadTaxPayer = function (){console.log('am good')};
+const loadTaxPayer = async (req, res) => {
+    try {
+        const citizens = await tables.Taxpayer.find();
+        res.status(200).json(citizens);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
 
 const assetRegistration = async (req, res) => {
     try {
@@ -22,11 +29,19 @@ const assetRegistration = async (req, res) => {
       res.status(201).json(newAsset);
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: 'Internal Server Error' });
+      res.status(500).json({ assetCode: 'Internal Server Error: '+error.message });
     }
   };
 
-const loadAsset = function (){console.log('am good')};
+const loadAsset =  async (req, res) => {
+    try {
+        const titles = await tables.Asset.find();
+        res.status(200).json(titles);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 
 module.exports = {
     taxPayerRegistration,
