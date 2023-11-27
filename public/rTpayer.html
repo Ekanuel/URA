@@ -15,14 +15,53 @@
         <div class="jumbotron">
             <div class="row">
                 <div class="col-md-8">
-                    <!-- Feel free to delete the paragraph after implementation -->
-                    <p>Create an appropriate form to capture the payer's details as indicated in the description. Upon successfull registration, a TIN matching the criteria must be generated and communicated to the user in form of an alert.</p>
+                    <form id="taxpayerForm">
+                        <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="dob">Date of Birth:</label>
+                            <input type="date" class="form-control" id="dob" name="dob" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="occupation">Occupation:</label>
+                            <input type="text" class="form-control" id="occupation" name="occupation" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="gender">Gender:</label>
+                            <select class="form-control" id="gender" name="gender" required>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Phone:</label>
+                            <input type="tel" class="form-control" id="phone" name="phone" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="income">Expected Annual Income:</label>
+                            <input type="number" class="form-control" id="income" name="income" required>
+                        </div>
+
+                        <button type="button" class="btn btn-success" onclick="registerTaxpayer()">Register</button>
+                    </form>
                 </div>
                 <div class="col-md-4">
-                        <form class="form-inline pt-10">
-                          <input class="form-control mr-sm-2" type="search" placeholder="ENTER TIN" aria-label="Search"> <br><br>
-                          <button class="btn btn-success" type="submit">SEARCH PAYER</button>
-                        </form>
+                    <form class="form-inline pt-10">
+                        <input class="form-control mr-sm-2" type="search" placeholder="ENTER TIN" aria-label="Search"> <br><br>
+                        <button class="btn btn-success" type="submit">SEARCH PAYER</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -32,9 +71,7 @@
         <div class="jumbotron">
             <h3 class="text-center">REGISTERED TAX PAYERS</h3>
             <div class="row">
-                <!-- Feel free to delete the paragraph after implementation -->
-                <p>Create a tabular view of the tax payers displaying the first 10 with navigation buttons to the next batch of 10 payers.</p>
-                <p>Upon search of a tax payer from the search field above, the searched payer should be the only one returned in the tabular view.</p>
+                <!-- Display registered taxpayers here -->
             </div>
         </div>
     </div>
@@ -42,6 +79,37 @@
     <div class="row text-center">
         <a class="btn btn-primary" href="index.html">BACK HOME</a>
     </div>
-    
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        function registerTaxpayer() {
+  const formData = {
+    name: $('#name').val(),
+    dob: $('#dob').val(),
+    occupation: $('#occupation').val(),
+    gender: $('#gender').val(),
+    phone: $('#phone').val(),
+    email: $('#email').val(),
+    income: $('#income').val()
+  };
+
+  $.ajax({
+    type: 'POST',
+    url: 'http://localhost:3000/taxpayers/registerTaxpayer', // Update the URL based on your server setup
+    contentType: 'application/json',
+    data: JSON.stringify(formData),
+    success: function(response) {
+      alert(`Taxpayer registered successfully! TIN: ${response.tin}`);
+      // You can add further actions here, like displaying a success message or updating the UI
+    },
+    error: function(error) {
+      console.error('Error registering taxpayer:', error);
+      // Handle errors, e.g., display an error message to the user
+    }
+  });
+}
+
+    </script>
 </body>
 </html>
+
