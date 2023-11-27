@@ -62,6 +62,20 @@
             <h3 class="text-center">REGISTERED ASSETS</h3>
             <div class="row">
                 <!-- Display registered assets here -->
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Estimated Cost</th>
+                        <th>Owner TIN</th>
+                        <th>Type</th>
+                        <th>Asset Code</th>
+                      </tr>
+                    </thead>
+                    <tbody id="assetTableBody">
+                     
+                    </tbody>
+                  </table>
             </div>
         </div>
     </div>
@@ -96,6 +110,34 @@
     }
   });
 }
+$(document).ready(function() {
+
+      // Make an Ajax request to fetch data
+      $.ajax({
+        type: 'GET',
+        url: '/assets',
+        success: function(data) {
+          // Clear existing table rows
+          $('#assetTableBody').empty();
+
+          // Iterate over the received data and append rows to the table
+          data.forEach(function(asset) {
+            $('#assetTableBody').append(`
+              <tr>
+                <td>${asset.name}</td>
+                <td>${asset.estimatedCost}</td>
+                <td>${asset.ownerTIN}</td>
+                <td>${asset.type}</td>
+                <td>${asset.assetCode}</td>
+              </tr>
+            `);
+          });
+        },
+        error: function(err) {
+          console.error('Error fetching data:', err);
+        }
+      });
+    });
 
     </script>
 </body>
