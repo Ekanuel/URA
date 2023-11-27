@@ -77,6 +77,23 @@
             <h3 class="text-center">REGISTERED TAX PAYERS</h3>
             <div class="row">
                 <!-- Display registered taxpayers here -->
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Date of Birth</th>
+                        <th>Occupation</th>
+                        <th>Gender</th>
+                        <th>Phone</th>
+                        <th>Email</th>
+                        <th>Expected Annual Income</th>
+                        <th>TIN</th>
+                      </tr>
+                    </thead>
+                    <tbody id="taxpayerTableBody">
+                      <!-- all payes -->
+                    </tbody>
+                  </table>
             </div>
         </div>
     </div>
@@ -124,6 +141,33 @@
     }
   });
 }
+$.ajax({
+        type: 'GET',
+        url: '/taxpayers',
+        success: function(data) {
+          // Clear existing table rows
+          $('#taxpayerTableBody').empty();
+
+          // Iterate over the received data and append rows to the table
+          data.forEach(function(taxpayer) {
+            $('#taxpayerTableBody').append(`
+              <tr>
+                <td>${taxpayer.name}</td>
+                <td>${taxpayer.dateOfBirth}</td>
+                <td>${taxpayer.occupation}</td>
+                <td>${taxpayer.gender}</td>
+                <td>${taxpayer.phone}</td>
+                <td>${taxpayer.email}</td>
+                <td>${taxpayer.expectedAnnualIncome}</td>
+                <td>${taxpayer.tin}</td>
+              </tr>
+            `);
+          });
+        },
+        error: function(err) {
+          console.error('Error fetching taxpayer data:', err);
+        }
+      });
 
     </script>
 </body>
